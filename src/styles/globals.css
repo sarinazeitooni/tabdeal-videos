@@ -1,0 +1,23 @@
+@import "tailwindcss";
+@config "../../tailwind.config.mjs";
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    min-height: 100vh;
+    background-color: theme("colors.surface.DEFAULT");
+    color: theme("colors.text.primary");
+    font-family: theme("fontFamily.sans");
+  }
+
+  ::selection {
+    background: color-mix(in srgb, theme("colors.accent.DEFAULT") 40%, transparent);
+  }
+}

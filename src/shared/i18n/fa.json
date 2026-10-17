@@ -1,0 +1,74 @@
+{
+  "site": {
+    "name": "تبدیل",
+    "description": "ویدیوهای کانال رسمی صرافی تبدیل",
+    "brand": "تبدیل",
+    "homeAriaLabel": "صفحه اصلی تبدیل",
+    "footerTagline": "ویدیوهای کانال رسمی صرافی تبدیل",
+    "footerCopyright": "© 2026 Tabdeal"
+  },
+  "home": {
+    "title": "ویدیوهای تبدیل",
+    "subtitle": "آموزش‌ها، معرفی محصولات و محتوای کانال رسمی صرافی تبدیل را تماشا کنید.",
+    "cta": "مشاهده ویدیوها"
+  },
+  "listing": {
+    "title": "ویدیوهای کانال تبدیل",
+    "searchTitle": "جستجو: {query}",
+    "searchDescription": "نتایج جستجو برای «{query}» در کانال تبدیل",
+    "channelNameFallback": "نام کانال",
+    "searchResults": "نتایج جستجو برای «{query}»",
+    "resultCount": " — {count} مورد",
+    "loadErrorTitle": "خطا در دریافت داده",
+    "loadErrorFallback": "بارگذاری ویدیوها با خطا مواجه شد. لطفاً دوباره تلاش کنید."
+  },
+  "search": {
+    "label": "جستجوی ویدیو بر اساس عنوان",
+    "buttonAriaLabel": "جستجو",
+    "placeholder": "جستجو..."
+  },
+  "video": {
+    "noPoster": "بدون تصویر",
+    "views": "{count} بازدید",
+    "likes": "{count} پسند",
+    "followers": "{count} دنبال‌کننده",
+    "category": "دسته‌بندی: {name}",
+    "noDescription": "توضیحاتی برای این ویدیو ثبت نشده است.",
+    "playerUnavailable": "پخش‌کننده ویدیو در دسترس نیست",
+    "emptyTitle": "ویدیویی یافت نشد",
+    "emptyDescription": "عبارت جستجو را تغییر دهید یا به فهرست کامل ویدیوها بازگردید.",
+    "metadataWatch": "تماشای «{title}» از کانال تبدیل",
+    "notFoundTitle": "ویدیو یافت نشد",
+    "notFoundHeading": "ویدیو پیدا نشد",
+    "notFoundDescription": "این ویدیو وجود ندارد یا دیگر در دسترس نیست.",
+    "avatarAlt": "آواتار کانال"
+  },
+  "pagination": {
+    "navAriaLabel": "صفحه‌بندی ویدیوها",
+    "first": "صفحه اول",
+    "previous": "صفحه قبل",
+    "next": "صفحه بعد",
+    "last": "صفحه آخر",
+    "pageAriaLabel": "صفحه {page}"
+  },
+  "errors": {
+    "pageNotFoundTitle": "صفحه پیدا نشد",
+    "pageNotFoundDescription": "آدرس وارد شده معتبر نیست یا محتوا حذف شده است.",
+    "backHome": "بازگشت به صفحه اصلی",
+    "genericTitle": "مشکلی پیش آمد",
+    "genericDescription": "بارگذاری صفحه با خطا مواجه شد. می‌توانید دوباره تلاش کنید.",
+    "retry": "تلاش مجدد"
+  },
+  "time": {
+    "momentsAgo": "چند لحظه پیش",
+    "minutesAgo": "{count} دقیقه پیش",
+    "hoursAgo": "{count} ساعت پیش",
+    "daysAgo": "{count} روز پیش",
+    "monthsAgo": "{count} ماه پیش",
+    "yearsAgo": "{count} سال پیش"
+  },
+  "numbers": {
+    "million": "{count} میلیون",
+    "thousand": "{count} هزار"
+  }
+}

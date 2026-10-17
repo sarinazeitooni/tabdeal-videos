@@ -1,0 +1,12 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[build.environment]
+  NODE_VERSION = "22"
+  APARAT_CHANNEL_USERNAME = "tabdealplatform"
+  APARAT_API_BASE_URL = "https://www.aparat.com"
+  APARAT_PER_PAGE = "12"
