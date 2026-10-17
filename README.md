@@ -18,7 +18,6 @@ Production-ready Next.js frontend for [Tabdeal](https://tabdeal.org)'s official 
 - TypeScript (strict)
 - Tailwind CSS v4
 - Axios
-- Netlify (`@netlify/plugin-nextjs`)
 
 ## Getting started
 
@@ -66,14 +65,6 @@ src/
 - Detail uses `video` with `videohash`.
 - Channel profile uses `profile`.
 - Aparat does not expose channel-scoped title search. Search loads the channel catalog on the server (cached ~5 minutes), filters by title, then paginates results.
-
-## Deployment (Netlify)
-
-1. Push this repository to GitHub.
-2. Create a Netlify site from the repo.
-3. Build command: `npm run build`
-4. Ensure `@netlify/plugin-nextjs` is enabled (`netlify.toml` included).
-5. Set environment variables from `.env.example`.
 
 ## Design assumptions
 
