@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-
 import {
   getChannelProfile,
   getVideoByUid,
@@ -8,14 +7,18 @@ import {
 } from "@/features/videos";
 import { siteConfig } from "@/shared/config/site";
 import { t } from "@/shared/i18n";
+import { GradientHeader } from "@/shared/layout/GradientHeader";
+import { BrandLogo } from "@/shared/ui/BrandLogo";
 import { Container } from "@/shared/ui/Container";
-import { AparatApiError } from "@/shared/lib/axios";
+import { isAparatApiError } from "@/shared/lib/axios";
 
 interface VideoPageProps {
   params: Promise<{ uid: string }>;
 }
 
-export async function generateMetadata({ params }: VideoPageProps): Promise<Metadata> {
+export const generateMetadata = async ({
+  params,
+}: VideoPageProps): Promise<Metadata> => {
   const { uid } = await params;
 
   try {
@@ -23,7 +26,8 @@ export async function generateMetadata({ params }: VideoPageProps): Promise<Meta
 
     return {
       title: video.title,
-      description: video.description || t("video.metadataWatch", { title: video.title }),
+      description:
+        video.description || t("video.metadataWatch", { title: video.title }),
       openGraph: {
         title: video.title,
         description: video.description || undefined,
@@ -37,9 +41,9 @@ export async function generateMetadata({ params }: VideoPageProps): Promise<Meta
       description: siteConfig.description,
     };
   }
-}
+};
 
-export default async function VideoPage({ params }: VideoPageProps) {
+const VideoPage = async ({ params }: VideoPageProps) => {
   const { uid } = await params;
 
   let video = null;
@@ -51,22 +55,24 @@ export default async function VideoPage({ params }: VideoPageProps) {
       getChannelProfile().catch(() => null),
     ]);
   } catch (error) {
-    if (error instanceof AparatApiError && error.status === 404) {
-      notFound();
-    }
+    if (isAparatApiError(error) && error.status === 404) notFound();
 
     throw error;
   }
 
-  if (!video) {
-    notFound();
-  }
+  if (!video) notFound();
 
   return (
-    <div className="pb-12 pt-6 sm:pt-8">
-      <Container>
+    <div className="pb-12">
+      <GradientHeader contentClassName="flex items-center justify-start py-4 sm:py-5">
+        <BrandLogo href="/videos" priority />
+      </GradientHeader>
+
+      <Container className="pt-6 sm:pt-8">
         <VideoDetails video={video} channel={channel} />
       </Container>
     </div>
   );
-}
+};
+
+export default VideoPage;

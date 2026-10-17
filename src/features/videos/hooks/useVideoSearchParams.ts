@@ -3,7 +3,7 @@
 import { useCallback, useMemo } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-export function useVideoSearchParams() {
+export const useVideoSearchParams = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -18,17 +18,11 @@ export function useVideoSearchParams() {
       const nextQuery = next.q !== undefined ? next.q : query;
       const nextPage = next.page !== undefined ? next.page : page;
 
-      if (nextQuery.trim()) {
-        params.set("q", nextQuery.trim());
-      } else {
-        params.delete("q");
-      }
+      if (nextQuery.trim()) params.set("q", nextQuery.trim());
+      else params.delete("q");
 
-      if (nextPage > 1) {
-        params.set("page", String(nextPage));
-      } else {
-        params.delete("page");
-      }
+      if (nextPage > 1) params.set("page", String(nextPage));
+      else params.delete("page");
 
       const basePath = pathname.startsWith("/videos") ? pathname : "/videos";
       const qs = params.toString();
@@ -61,4 +55,4 @@ export function useVideoSearchParams() {
     }),
     [createHref, page, query, setPage, setQuery],
   );
-}
+};

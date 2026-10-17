@@ -5,25 +5,27 @@ const config = {
     extend: {
       colors: {
         surface: {
-          DEFAULT: "#0f0f0f",
+          DEFAULT: "#2C2E30",
           elevated: "#1a1a1a",
-          muted: "#242424",
+          light: "#3B3D3F",
+          muted: "#3a3c3e",
+          like: "#4F5154",
         },
-        border: "#2e2e2e",
+        border: {
+          DEFAULT: "#404244",
+          muted: "#3a3c3e",
+        },
         text: {
-          primary: "#f5f5f5",
+          primary: "#ffffff",
           secondary: "#c4c4c4",
           muted: "#8a8a8a",
         },
         accent: {
-          DEFAULT: "#f5c518",
-          hover: "#ffd84d",
+          DEFAULT: "#F0B90B",
+          hover: "#ffd24a",
         },
+        tag: "#2EC0FF",
         ink: "#111111",
-        tabdeal: {
-          DEFAULT: "#f5c518",
-          dark: "#0f0f0f",
-        },
       },
       fontFamily: {
         sans: ["var(--font-vazirmatn)", "Tahoma", "sans-serif"],
@@ -36,17 +38,14 @@ const config = {
         caption: ["0.75rem", { lineHeight: "1.25rem" }],
       },
       maxWidth: {
-        content: "1180px",
+        content: "1680px",
       },
       boxShadow: {
         player: "0 12px 40px rgba(0, 0, 0, 0.45)",
-        header: "0 8px 32px rgba(245, 197, 24, 0.08)",
       },
       backgroundImage: {
         "header-gradient":
-          "linear-gradient(180deg, rgba(245, 197, 24, 0.18) 0%, rgba(245, 197, 24, 0.05) 45%, rgba(15, 15, 15, 0) 100%)",
-        "page-glow":
-          "radial-gradient(ellipse 80% 50% at 50% -10%, rgba(245, 197, 24, 0.22), transparent 70%)",
+          "linear-gradient(90deg, #2C2E30 -0.76%, #0E0E0E 50%)",
       },
     },
   },

@@ -1,18 +1,26 @@
 import axios, { type AxiosError, type AxiosInstance } from "axios";
-
 import { siteConfig } from "@/shared/config/site";
 
-export class AparatApiError extends Error {
-  readonly status?: number;
-  readonly details?: unknown;
+export type AparatApiError = Error & {
+  name: "AparatApiError";
+  status?: number;
+  details?: unknown;
+};
 
-  constructor(message: string, status?: number, details?: unknown) {
-    super(message);
-    this.name = "AparatApiError";
-    this.status = status;
-    this.details = details;
-  }
-}
+export const createAparatApiError = (
+  message: string,
+  status?: number,
+  details?: unknown,
+): AparatApiError => {
+  const error = new Error(message) as AparatApiError;
+  error.name = "AparatApiError";
+  error.status = status;
+  error.details = details;
+  return error;
+};
+
+export const isAparatApiError = (error: unknown): error is AparatApiError =>
+  error instanceof Error && error.name === "AparatApiError";
 
 export const aparatClient: AxiosInstance = axios.create({
   baseURL: `${siteConfig.aparatBaseUrl}/etc/api`,
@@ -31,6 +39,6 @@ aparatClient.interceptors.response.use(
       error.message ??
       "Aparat API request failed";
 
-    throw new AparatApiError(message, status, error.response?.data);
+    throw createAparatApiError(message, status, error.response?.data);
   },
 );

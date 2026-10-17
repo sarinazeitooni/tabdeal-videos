@@ -24,8 +24,9 @@
   },
   "search": {
     "label": "جستجوی ویدیو بر اساس عنوان",
+    "button": "جستجو",
     "buttonAriaLabel": "جستجو",
-    "placeholder": "جستجو..."
+    "placeholder": "جستجو ویدیو..."
   },
   "video": {
     "noPoster": "بدون تصویر",

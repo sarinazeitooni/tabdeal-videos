@@ -4,19 +4,17 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
 }
 
-export function Input({ label, id, className = "", ...props }: InputProps) {
-  return (
-    <div className="w-full">
-      {label ? (
-        <label htmlFor={id} className="mb-2 block text-caption text-text-secondary">
-          {label}
-        </label>
-      ) : null}
-      <input
-        id={id}
-        className={`h-12 w-full rounded-md border border-border bg-surface-elevated px-4 text-body text-text-primary placeholder:text-text-muted transition-colors focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30 ${className}`.trim()}
-        {...props}
-      />
-    </div>
-  );
-}
+export const Input = ({ label, id, className = "", ...props }: InputProps) => (
+  <div className="w-full">
+    {label ? (
+      <label htmlFor={id} className="mb-2 block text-caption text-text-secondary">
+        {label}
+      </label>
+    ) : null}
+    <input
+      id={id}
+      className={`h-12 w-full rounded-md border border-border bg-surface-elevated px-4 text-body text-text-primary placeholder:text-text-muted transition-colors focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30 ${className}`.trim()}
+      {...props}
+    />
+  </div>
+);

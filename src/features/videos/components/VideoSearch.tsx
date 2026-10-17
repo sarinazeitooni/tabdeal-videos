@@ -2,14 +2,32 @@
 
 import { useEffect, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
-
 import { t } from "@/shared/i18n";
 
 interface VideoSearchProps {
   initialQuery?: string;
 }
 
-export function VideoSearch({ initialQuery = "" }: VideoSearchProps) {
+const SearchIcon = () => (
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    aria-hidden
+    className="shrink-0"
+  >
+    <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" />
+    <path
+      d="M20 20L16.5 16.5"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
+  </svg>
+);
+
+export const VideoSearch = ({ initialQuery = "" }: VideoSearchProps) => {
   const router = useRouter();
   const [value, setValue] = useState(initialQuery);
 
@@ -22,27 +40,18 @@ export function VideoSearch({ initialQuery = "" }: VideoSearchProps) {
     const trimmed = value.trim();
     const params = new URLSearchParams();
 
-    if (trimmed) {
-      params.set("q", trimmed);
-    }
+    if (trimmed) params.set("q", trimmed);
 
     const qs = params.toString();
     router.push(qs ? `/videos?${qs}` : "/videos");
   };
 
   return (
-    <form onSubmit={onSubmit} role="search" className="w-full">
+    <form onSubmit={onSubmit} role="search" className="w-full min-w-0">
       <label htmlFor="video-search" className="sr-only">
         {t("search.label")}
       </label>
-      <div className="flex h-12 overflow-hidden rounded-lg border border-border bg-surface-elevated shadow-sm focus-within:border-accent focus-within:ring-2 focus-within:ring-accent/25">
-        <button
-          type="submit"
-          aria-label={t("search.buttonAriaLabel")}
-          className="flex h-12 w-12 shrink-0 items-center justify-center bg-accent text-ink transition-colors hover:bg-accent-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ink/40"
-        >
-          <SearchIcon />
-        </button>
+      <div className="flex w-full min-w-0 items-center gap-3 rounded-2xl bg-surface-elevated p-2 sm:gap-4 sm:p-3 md:p-4">
         <input
           id="video-search"
           name="q"
@@ -50,24 +59,18 @@ export function VideoSearch({ initialQuery = "" }: VideoSearchProps) {
           value={value}
           onChange={(event) => setValue(event.target.value)}
           placeholder={t("search.placeholder")}
-          className="h-12 w-full bg-transparent px-4 text-body text-text-primary placeholder:text-text-muted focus:outline-none"
+          className="min-w-0 flex-1 rounded-md bg-surface-light px-3 py-2.5 text-body text-text-primary placeholder:text-text-muted focus:outline-none sm:py-3"
           autoComplete="off"
         />
+        <button
+          type="submit"
+          aria-label={t("search.buttonAriaLabel")}
+          className="inline-flex shrink-0 items-center justify-center gap-2 rounded-md bg-accent px-3 py-2.5 text-body font-semibold text-ink transition-colors hover:bg-accent-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent sm:px-4 sm:py-3"
+        >
+          <SearchIcon />
+          <span>{t("search.button")}</span>
+        </button>
       </div>
     </form>
   );
-}
-
-function SearchIcon() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" />
-      <path
-        d="M20 20L16.5 16.5"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
+};

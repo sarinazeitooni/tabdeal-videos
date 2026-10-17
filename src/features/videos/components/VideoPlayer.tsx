@@ -5,7 +5,7 @@ interface VideoPlayerProps {
   title: string;
 }
 
-export function VideoPlayer({ frameUrl, title }: VideoPlayerProps) {
+export const VideoPlayer = ({ frameUrl, title }: VideoPlayerProps) => {
   if (!frameUrl) {
     return (
       <div className="flex aspect-video w-full items-center justify-center rounded-2xl bg-surface-elevated text-body text-text-secondary">
@@ -33,4 +33,4 @@ export function VideoPlayer({ frameUrl, title }: VideoPlayerProps) {
       </div>
     </div>
   );
-}
+};

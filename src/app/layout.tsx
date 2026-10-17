@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
 import { Vazirmatn } from "next/font/google";
-
-import { Footer } from "@/shared/layout/Footer";
-import { Header } from "@/shared/layout/Header";
 import { siteConfig } from "@/shared/config/site";
 import "@/styles/globals.css";
 
@@ -27,20 +24,18 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+const RootLayout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
-  return (
-    <html lang="fa" dir="rtl">
-      <body
-        className={`${vazirmatn.variable} flex min-h-screen flex-col bg-surface font-sans antialiased`}
-      >
-        <Header />
-        <main className="flex flex-1 flex-col">{children}</main>
-        <Footer />
-      </body>
-    </html>
-  );
-}
+}>) => (
+  <html lang="fa" dir="rtl">
+    <body
+      className={`${vazirmatn.variable} flex min-h-screen flex-col bg-surface font-sans antialiased`}
+    >
+      <main className="flex flex-1 flex-col">{children}</main>
+    </body>
+  </html>
+);
+
+export default RootLayout;

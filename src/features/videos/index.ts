@@ -4,6 +4,7 @@ export { VideoDetails } from "./components/VideoDetails";
 export { VideoList } from "./components/VideoList";
 export { VideoPlayer } from "./components/VideoPlayer";
 export { VideoSearch } from "./components/VideoSearch";
+export { VideosHero } from "./components/VideosHero";
 export { useVideoSearchParams } from "./hooks/useVideoSearchParams";
 export type {
   ChannelProfile,

@@ -1,5 +1,4 @@
 import { unstable_cache } from "next/cache";
-
 import type {
   AparatProfileRaw,
   AparatUiPaging,
@@ -16,7 +15,11 @@ import {
   normalizeVideoSummary,
 } from "@/features/videos/utils/normalizeVideo";
 import { siteConfig } from "@/shared/config/site";
-import { AparatApiError, aparatClient } from "@/shared/lib/axios";
+import {
+  aparatClient,
+  createAparatApiError,
+  isAparatApiError,
+} from "@/shared/lib/axios";
 
 interface VideoByUserResponse {
   videobyuser?: AparatVideoRaw[] | null;
@@ -33,22 +36,21 @@ interface ProfileResponse {
   errors?: Array<{ status?: number; detail?: string }>;
 }
 
-function getVideoList(payload: VideoByUserResponse): AparatVideoRaw[] {
+const getVideoList = (payload: VideoByUserResponse): AparatVideoRaw[] => {
   const list = payload.videobyuser ?? payload.videoByUser;
   return Array.isArray(list) ? list : [];
-}
+};
 
-function normalizeList(rawVideos: AparatVideoRaw[]): VideoSummary[] {
-  return rawVideos
+const normalizeList = (rawVideos: AparatVideoRaw[]): VideoSummary[] =>
+  rawVideos
     .map((video) => normalizeVideoSummary(video))
     .filter((video): video is VideoSummary => video !== null);
-}
 
-async function fetchChannelVideosPage(params: {
+const fetchChannelVideosPage = async (params: {
   username: string;
   perPage: number;
   offset: number;
-}): Promise<{ videos: VideoSummary[]; ui: AparatUiPaging | null }> {
+}): Promise<{ videos: VideoSummary[]; ui: AparatUiPaging | null }> => {
   const { username, perPage, offset } = params;
   const path =
     offset > 0
@@ -60,33 +62,35 @@ async function fetchChannelVideosPage(params: {
     videos: normalizeList(getVideoList(data)),
     ui: data.ui ?? null,
   };
-}
+};
 
-async function fetchAllChannelVideosUncached(username: string): Promise<VideoSummary[]> {
+const fetchAllChannelVideosUncached = async (
+  username: string,
+): Promise<VideoSummary[]> => {
   const perPage = 100;
   const collected: VideoSummary[] = [];
   let offset = 0;
   let guard = 0;
 
   while (guard < 50) {
-    const { videos, ui } = await fetchChannelVideosPage({ username, perPage, offset });
+    const { videos, ui } = await fetchChannelVideosPage({
+      username,
+      perPage,
+      offset,
+    });
 
-    if (videos.length === 0) {
-      break;
-    }
+    if (videos.length === 0) break;
 
     collected.push(...videos);
 
-    if (!ui?.pagingForward) {
-      break;
-    }
+    if (!ui?.pagingForward) break;
 
     const nextOffsetMatch = ui.pagingForward.match(/curoffset\/(\d+)/i);
-    const nextOffset = nextOffsetMatch ? Number(nextOffsetMatch[1]) : offset + perPage;
+    const nextOffset = nextOffsetMatch
+      ? Number(nextOffsetMatch[1])
+      : offset + perPage;
 
-    if (!Number.isFinite(nextOffset) || nextOffset <= offset) {
-      break;
-    }
+    if (!Number.isFinite(nextOffset) || nextOffset <= offset) break;
 
     offset = nextOffset;
     guard += 1;
@@ -98,7 +102,7 @@ async function fetchAllChannelVideosUncached(username: string): Promise<VideoSum
   }
 
   return Array.from(unique.values());
-}
+};
 
 const getCachedChannelVideos = unstable_cache(
   async (username: string) => fetchAllChannelVideosUncached(username),
@@ -106,74 +110,42 @@ const getCachedChannelVideos = unstable_cache(
   { revalidate: 300 },
 );
 
-export async function getChannelProfile(
+export const getChannelProfile = async (
   username = siteConfig.channelUsername,
-): Promise<ChannelProfile> {
+): Promise<ChannelProfile> => {
   try {
     const { data } = await aparatClient.get<ProfileResponse>(
       `/profile/username/${encodeURIComponent(username)}`,
     );
 
     if (data.errors?.length) {
-      throw new AparatApiError(data.errors[0]?.detail ?? "Channel not found", 404, data.errors);
+      throw createAparatApiError(
+        data.errors[0]?.detail ?? "Channel not found",
+        404,
+        data.errors,
+      );
     }
 
     const profile = data.profile ? normalizeChannelProfile(data.profile) : null;
 
     if (!profile) {
-      throw new AparatApiError("Channel profile is unavailable", 404);
+      throw createAparatApiError("Channel profile is unavailable", 404);
     }
 
     return profile;
   } catch (error) {
-    if (error instanceof AparatApiError) {
-      throw error;
-    }
+    if (isAparatApiError(error)) throw error;
 
-    throw new AparatApiError("Failed to load channel profile");
+    throw createAparatApiError("Failed to load channel profile");
   }
-}
+};
 
-export async function getChannelVideos(params: {
-  page?: number;
-  perPage?: number;
-  query?: string;
-  username?: string;
-}): Promise<VideoListResult> {
-  const page = Math.max(1, params.page ?? 1);
-  const perPage = Math.max(1, Math.min(params.perPage ?? siteConfig.perPage, 50));
-  const query = (params.query ?? "").trim();
-  const username = params.username ?? siteConfig.channelUsername;
-
-  if (query) {
-    return searchChannelVideos({ username, query, page, perPage });
-  }
-
-  const profile = await getChannelProfile(username).catch(() => null);
-  const offset = (page - 1) * perPage;
-  const { videos, ui } = await fetchChannelVideosPage({ username, perPage, offset });
-
-  const totalItems = profile?.videoCount ?? null;
-
-  return {
-    videos,
-    query: "",
-    pagination: buildPagination({
-      page,
-      perPage,
-      totalItems,
-      ui,
-      itemCount: videos.length,
-    }),
-  };
-}
-
-async function searchChannelVideos(params: {
+const searchChannelVideos = async (params: {
   username: string;
   query: string;
   page: number;
   perPage: number;
-}): Promise<VideoListResult> {
+}): Promise<VideoListResult> => {
   const { username, query, page, perPage } = params;
   const allVideos = await getCachedChannelVideos(username);
   const normalizedQuery = query.toLocaleLowerCase("fa");
@@ -202,39 +174,79 @@ async function searchChannelVideos(params: {
       },
     }),
   };
-}
+};
 
-export async function getVideoByUid(uid: string): Promise<VideoDetail> {
+export const getChannelVideos = async (params: {
+  page?: number;
+  perPage?: number;
+  query?: string;
+  username?: string;
+}): Promise<VideoListResult> => {
+  const page = Math.max(1, params.page ?? 1);
+  const perPage = Math.max(
+    1,
+    Math.min(params.perPage ?? siteConfig.perPage, 50),
+  );
+  const query = (params.query ?? "").trim();
+  const username = params.username ?? siteConfig.channelUsername;
+
+  if (query) return searchChannelVideos({ username, query, page, perPage });
+
+  const profile = await getChannelProfile(username).catch(() => null);
+  const offset = (page - 1) * perPage;
+  const { videos, ui } = await fetchChannelVideosPage({
+    username,
+    perPage,
+    offset,
+  });
+
+  const totalItems = profile?.videoCount ?? null;
+
+  return {
+    videos,
+    query: "",
+    pagination: buildPagination({
+      page,
+      perPage,
+      totalItems,
+      ui,
+      itemCount: videos.length,
+    }),
+  };
+};
+
+export const getVideoByUid = async (uid: string): Promise<VideoDetail> => {
   const trimmed = uid.trim();
 
-  if (!trimmed) {
-    throw new AparatApiError("Video identifier is required", 400);
-  }
+  if (!trimmed) throw createAparatApiError("Video identifier is required", 400);
 
   try {
-    const { data } = await aparatClient.get<VideoResponse & { errors?: Array<{ status?: number; detail?: string }> }>(
-      `/video/videohash/${encodeURIComponent(trimmed)}`,
-    );
+    const { data } = await aparatClient.get<
+      VideoResponse & { errors?: Array<{ status?: number; detail?: string }> }
+    >(`/video/videohash/${encodeURIComponent(trimmed)}`);
 
     if (data.errors?.length) {
-      throw new AparatApiError(data.errors[0]?.detail ?? "Video not found", 404, data.errors);
+      throw createAparatApiError(
+        data.errors[0]?.detail ?? "Video not found",
+        404,
+        data.errors,
+      );
     }
 
     const video = data.video ? normalizeVideoDetail(data.video) : null;
 
-    if (!video) {
-      throw new AparatApiError("Video not found", 404);
-    }
+    if (!video) throw createAparatApiError("Video not found", 404);
 
     return video;
   } catch (error) {
-    if (error instanceof AparatApiError) {
+    if (isAparatApiError(error)) {
       if (error.status === 404) {
-        throw new AparatApiError("Video not found", 404, error.details);
+        throw createAparatApiError("Video not found", 404, error.details);
       }
+
       throw error;
     }
 
-    throw new AparatApiError("Failed to load video", 500);
+    throw createAparatApiError("Failed to load video", 500);
   }
-}
+};
