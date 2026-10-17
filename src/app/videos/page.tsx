@@ -4,12 +4,12 @@ import {
   VideoList,
   VideosHero,
 } from "@/features/videos";
-import { toPersianDigits } from "@/features/videos/utils/normalizeVideo";
 import { siteConfig } from "@/shared/config/site";
 import { t } from "@/shared/i18n";
+import { toPersianDigits } from "@/shared/lib/digits";
+import { isAparatApiError } from "@/shared/lib/axios";
 import { Container } from "@/shared/ui/Container";
 import { Pagination } from "@/shared/ui/Pagination";
-import { isAparatApiError } from "@/shared/lib/axios";
 
 interface VideosPageProps {
   searchParams: Promise<{
@@ -91,10 +91,12 @@ const VideosPage = async ({ searchParams }: VideosPageProps) => {
             role="alert"
             className="rounded-2xl border border-accent/30 bg-accent/5 px-6 py-10 text-center"
           >
-            <p className="text-section-title font-semibold text-text-primary">
+            <p className="text-heading font-bold text-text-primary md:text-heading-lg">
               {t("listing.loadErrorTitle")}
             </p>
-            <p className="mt-2 text-body text-text-secondary">{listError}</p>
+            <p className="mt-2 text-body font-normal text-text-secondary">
+              {listError}
+            </p>
           </div>
         ) : result ? (
           <>

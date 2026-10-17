@@ -1,3 +1,5 @@
+import type { PaginationMeta } from "@/shared/types/pagination";
+
 export interface VideoSummary {
   id: string;
   uid: string;
@@ -36,13 +38,9 @@ export interface ChannelProfile {
   official: boolean;
 }
 
-export interface VideoPagination {
-  page: number;
+export interface VideoPagination extends PaginationMeta {
   perPage: number;
   totalItems: number | null;
-  totalPages: number | null;
-  hasNext: boolean;
-  hasPrevious: boolean;
   nextOffset: number | null;
   previousOffset: number | null;
 }

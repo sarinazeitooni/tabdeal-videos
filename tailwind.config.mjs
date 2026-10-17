@@ -28,14 +28,27 @@ const config = {
         ink: "#111111",
       },
       fontFamily: {
-        sans: ["var(--font-vazirmatn)", "Tahoma", "sans-serif"],
+        sans: ["var(--font-iransans)", "Tahoma", "sans-serif"],
+        rubik: ["var(--font-rubik)", "Tahoma", "sans-serif"],
       },
+      /**
+       * Figma IRANSans type scale (px only).
+       * line-height 100% → "1"; otherwise explicit px.
+       */
       fontSize: {
-        "page-title": ["1.5rem", { lineHeight: "2.25rem" }],
-        "section-title": ["1.125rem", { lineHeight: "1.75rem" }],
-        "video-title": ["0.9375rem", { lineHeight: "1.5rem" }],
-        body: ["0.875rem", { lineHeight: "1.5rem" }],
-        caption: ["0.75rem", { lineHeight: "1.25rem" }],
+        body: ["14px", { lineHeight: "21px", letterSpacing: "0" }],
+        "body-tight": ["14px", { lineHeight: "1", letterSpacing: "0" }],
+        "body-sm": ["14px", { lineHeight: "16px", letterSpacing: "0" }],
+        "body-loose": ["14px", { lineHeight: "24px", letterSpacing: "0" }],
+        title: ["16px", { lineHeight: "1", letterSpacing: "0" }],
+        heading: ["18px", { lineHeight: "1", letterSpacing: "0" }],
+        "heading-lg": ["20px", { lineHeight: "1", letterSpacing: "0" }],
+        display: ["32px", { lineHeight: "1", letterSpacing: "0" }],
+      },
+      fontWeight: {
+        normal: "400",
+        medium: "500",
+        bold: "700",
       },
       maxWidth: {
         content: "1680px",

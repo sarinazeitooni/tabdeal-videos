@@ -11,7 +11,7 @@ export const VideosHero = ({ initialQuery = "" }: VideosHeroProps) => (
     className="mb-12 md:mb-16"
     contentClassName="flex flex-col gap-4 py-5 sm:gap-5 sm:py-6 md:gap-6 md:py-8"
   >
-    <div className="flex min-w-0 justify-start">
+    <div className="flex  justify-start">
       <BrandLogo priority />
     </div>
     <VideoSearch initialQuery={initialQuery} />

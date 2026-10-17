@@ -1,12 +1,9 @@
 import type { ReactNode } from "react";
-
 import { Container } from "@/shared/ui/Container";
 
 interface GradientHeaderProps {
   children: ReactNode;
-  /** Classes on the outer gradient section */
   className?: string;
-  /** Classes on the inner Container (content layer) */
   contentClassName?: string;
 }
 
@@ -16,7 +13,7 @@ export const GradientHeader = ({
   contentClassName = "",
 }: GradientHeaderProps) => (
   <section
-    className={`relative box-border overflow-hidden bg-header-gradient ${className}`.trim()}
+    className={`sticky top-0 z-50 box-border overflow-hidden bg-header-gradient ${className}`.trim()}
   >
     <div
       aria-hidden="true"
@@ -26,7 +23,7 @@ export const GradientHeader = ({
     </div>
 
     <Container
-      className={`relative z-10 box-border min-w-0 ${contentClassName}`.trim()}
+      className={`relative z-10 box-border  ${contentClassName}`.trim()}
     >
       {children}
     </Container>

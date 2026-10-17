@@ -1,10 +1,11 @@
-import type { ChannelProfile, VideoDetail } from "@/features/videos/types/video.types";
-import {
-  formatVisitCount,
-  toPersianDigits,
-} from "@/features/videos/utils/normalizeVideo";
+import type {
+  ChannelProfile,
+  VideoDetail,
+} from "@/features/videos/types/video.types";
 import { VideoPlayer } from "@/features/videos/components/VideoPlayer";
+import { formatVisitCount } from "@/features/videos/utils/normalizeVideo";
 import { t } from "@/shared/i18n";
+import { toPersianDigits } from "@/shared/lib/digits";
 import { ChannelAvatar } from "@/shared/ui/ChannelAvatar";
 
 interface VideoDetailsProps {
@@ -36,7 +37,7 @@ export const VideoDetails = ({ video, channel }: VideoDetailsProps) => {
     <div className="flex flex-col gap-5">
       <VideoPlayer frameUrl={video.frame} title={video.title} />
 
-      <h1 className="text-page-title font-bold text-text-primary">
+      <h1 className="text-heading-lg font-bold text-text-primary md:text-display">
         {video.title}
       </h1>
 
@@ -44,11 +45,11 @@ export const VideoDetails = ({ video, channel }: VideoDetailsProps) => {
         <div className="flex items-center gap-3">
           <ChannelAvatar size="lg" />
           <div>
-            <p className="text-body font-semibold text-text-primary">
+            <p className="text-title font-normal text-text-primary md:text-heading-lg">
               {channelName}
             </p>
             {channel?.followerCount ? (
-              <p className="text-caption text-text-muted">
+              <p className="text-body-sm font-normal text-text-muted md:text-title mt-2">
                 {t("video.followers", {
                   count: toPersianDigits(channel.followerCount),
                 })}
@@ -58,13 +59,13 @@ export const VideoDetails = ({ video, channel }: VideoDetailsProps) => {
         </div>
 
         <div
-          className="inline-flex items-center gap-2 rounded-lg bg-surface-like px-3 py-2 text-body text-text-primary"
+          className="inline-flex items-center gap-2 rounded-lg bg-surface-like px-3 py-2 text-title font-normal text-text-primary"
           aria-label={t("video.likes", {
             count: toPersianDigits(video.likeCount),
           })}
         >
           <HeartIcon />
-          <span className="tabular-nums">
+          <span className="font-rubik tabular-nums">
             {toPersianDigits(video.likeCount)}
           </span>
         </div>
@@ -72,7 +73,7 @@ export const VideoDetails = ({ video, channel }: VideoDetailsProps) => {
 
       <section className="flex flex-col gap-3">
         {metaItems.length > 0 || video.tags.length > 0 ? (
-          <p className="text-caption text-text-muted">
+          <p className="text-body-sm font-normal text-text-muted md:text-heading">
             {metaItems.join(" . ")}
             {metaItems.length > 0 && video.tags.length > 0 ? " . " : null}
             {video.tags.map((tag, index) => (
@@ -87,11 +88,13 @@ export const VideoDetails = ({ video, channel }: VideoDetailsProps) => {
         ) : null}
 
         {video.description ? (
-          <p className="whitespace-pre-wrap text-body leading-8 text-text-secondary">
+          <p className="whitespace-pre-wrap text-body-loose font-normal text-text-secondary md:text-title">
             {video.description}
           </p>
         ) : (
-          <p className="text-body text-text-muted">{t("video.noDescription")}</p>
+          <p className="text-body-loose font-normal text-text-muted md:text-title">
+            {t("video.noDescription")}
+          </p>
         )}
       </section>
     </div>

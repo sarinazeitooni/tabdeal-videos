@@ -1,12 +1,13 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
-import { toPersianDigits } from "@/features/videos/utils/normalizeVideo";
-import type { VideoPagination } from "@/features/videos/types/video.types";
+import { toPersianDigits } from "@/shared/lib/digits";
+import type { PaginationMeta } from "@/shared/types/pagination";
 import { t } from "@/shared/i18n";
 
-interface PaginationProps {
-  pagination: VideoPagination;
+export interface PaginationProps {
+  pagination: PaginationMeta;
   createHref: (page: number) => string;
+  className?: string;
 }
 
 const buildPageItems = (
@@ -116,13 +117,17 @@ const PaginationLink = ({
   );
 };
 
-export const Pagination = ({ pagination, createHref }: PaginationProps) => {
+export const Pagination = ({
+  pagination,
+  createHref,
+  className = "",
+}: PaginationProps) => {
   const { page, totalPages, hasNext, hasPrevious } = pagination;
   const lastPage = totalPages ?? (hasNext ? page + 1 : page);
   const showFirstLast = Boolean(totalPages && totalPages > 1);
 
-  if (!totalPages || totalPages <= 1) {
-    if (!hasNext && !hasPrevious) return null;
+  if ((!totalPages || totalPages <= 1) && !hasNext && !hasPrevious) {
+    return null;
   }
 
   const items =
@@ -132,7 +137,7 @@ export const Pagination = ({ pagination, createHref }: PaginationProps) => {
     <nav
       dir="ltr"
       aria-label={t("pagination.navAriaLabel")}
-      className="flex items-center justify-center gap-1.5 py-6 md:py-8 sm:gap-2"
+      className={`flex items-center justify-center gap-1.5 py-6 sm:gap-2 md:py-8 ${className}`.trim()}
     >
       {showFirstLast ? (
         <PaginationLink
@@ -156,7 +161,7 @@ export const Pagination = ({ pagination, createHref }: PaginationProps) => {
         item === "ellipsis" ? (
           <span
             key={`ellipsis-${index}`}
-            className="px-1 text-body text-text-muted"
+            className="px-1 text-body-tight font-normal text-text-muted"
             aria-hidden
           >
             …
@@ -169,10 +174,10 @@ export const Pagination = ({ pagination, createHref }: PaginationProps) => {
               page: toPersianDigits(item),
             })}
             aria-current={item === page ? "page" : undefined}
-            className={`flex h-9 w-9 items-center justify-center rounded-full text-body transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
+            className={`flex h-9 w-9 items-center justify-center rounded-full text-body-tight transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
               item === page
-                ? "bg-accent font-semibold text-ink"
-                : "text-text-secondary hover:bg-surface-elevated hover:text-text-primary"
+                ? "bg-accent font-medium text-ink"
+                : "font-normal text-text-secondary hover:bg-surface-elevated hover:text-text-primary"
             }`}
           >
             {toPersianDigits(item)}

@@ -8,6 +8,7 @@ import type {
   VideoSummary,
 } from "@/features/videos/types/video.types";
 import { t } from "@/shared/i18n";
+import { toPersianDigits } from "@/shared/lib/digits";
 
 const toNumber = (
   value: string | number | undefined | null,
@@ -51,9 +52,6 @@ export const formatDuration = (seconds: number): string => {
 
   return `${pad(minutes)}:${pad(secs)}`;
 };
-
-export const toPersianDigits = (value: number | string): string =>
-  String(value).replace(/\d/g, (digit) => "۰۱۲۳۴۵۶۷۸۹"[Number(digit)] ?? digit);
 
 export const formatRelativeTime = (
   timediffSeconds?: number,

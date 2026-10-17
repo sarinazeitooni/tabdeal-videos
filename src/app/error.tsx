@@ -11,13 +11,13 @@ interface ErrorProps {
 
 const Error = ({ reset }: ErrorProps) => (
   <Container className="py-20 text-center">
-    <h1 className="text-page-title font-bold text-text-primary">
+    <h1 className="text-heading-lg font-bold text-text-primary md:text-display">
       {t("errors.genericTitle")}
     </h1>
-    <p className="mt-3 text-body text-text-secondary">
+    <p className="mt-3 text-body font-normal text-text-secondary">
       {t("errors.genericDescription")}
     </p>
-    <Button onClick={reset} className="mt-6 h-11 px-6 font-semibold">
+    <Button onClick={reset} className="mt-6 px-6 py-2.5 text-body-tight font-medium">
       {t("errors.retry")}
     </Button>
   </Container>

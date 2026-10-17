@@ -10,10 +10,10 @@ export const VideoList = ({ videos }: VideoListProps) => {
   if (videos.length === 0) {
     return (
       <div className="rounded-2xl border border-dashed border-border bg-surface-elevated/50 px-6 py-16 text-center">
-        <p className="text-section-title font-semibold text-text-primary">
+        <p className="text-heading font-bold text-text-primary md:text-heading-lg">
           {t("video.emptyTitle")}
         </p>
-        <p className="mt-2 text-body text-text-secondary">
+        <p className="mt-2 text-body font-normal text-text-secondary">
           {t("video.emptyDescription")}
         </p>
       </div>
@@ -21,9 +21,9 @@ export const VideoList = ({ videos }: VideoListProps) => {
   }
 
   return (
-    <ul className="grid min-w-0 grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 xl:grid-cols-3">
+    <ul className="grid  grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 xl:grid-cols-3">
       {videos.map((video) => (
-        <li key={video.uid} className="min-w-0">
+        <li key={video.uid} className="">
           <VideoCard video={video} />
         </li>
       ))}

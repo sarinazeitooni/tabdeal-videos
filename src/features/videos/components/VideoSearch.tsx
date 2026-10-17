@@ -47,11 +47,11 @@ export const VideoSearch = ({ initialQuery = "" }: VideoSearchProps) => {
   };
 
   return (
-    <form onSubmit={onSubmit} role="search" className="w-full min-w-0">
+    <form onSubmit={onSubmit} role="search" className="w-full ">
       <label htmlFor="video-search" className="sr-only">
         {t("search.label")}
       </label>
-      <div className="flex w-full min-w-0 items-center gap-3 rounded-2xl bg-surface-elevated p-2 sm:gap-4 sm:p-3 md:p-4">
+      <div className="flex w-full  items-center gap-3 rounded-lg bg-surface-elevated p-4 sm:gap-4 sm:p-3 md:p-4">
         <input
           id="video-search"
           name="q"
@@ -59,13 +59,13 @@ export const VideoSearch = ({ initialQuery = "" }: VideoSearchProps) => {
           value={value}
           onChange={(event) => setValue(event.target.value)}
           placeholder={t("search.placeholder")}
-          className="min-w-0 flex-1 rounded-md bg-surface-light px-3 py-2.5 text-body text-text-primary placeholder:text-text-muted focus:outline-none sm:py-3"
+          className=" flex-1 rounded-md bg-surface-light px-3 py-2.5 text-body-tight font-normal text-text-primary placeholder:text-text-primary focus:outline-none sm:py-3 md:text-title"
           autoComplete="off"
         />
         <button
           type="submit"
           aria-label={t("search.buttonAriaLabel")}
-          className="inline-flex shrink-0 items-center justify-center gap-2 rounded-md bg-accent px-3 py-2.5 text-body font-semibold text-ink transition-colors hover:bg-accent-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent sm:px-4 sm:py-3"
+          className="inline-flex shrink-0 items-center justify-center gap-2 rounded-md bg-accent px-3 py-2.5 text-center text-body-tight font-medium text-ink transition-colors hover:bg-accent-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent sm:px-4 sm:py-3"
         >
           <SearchIcon />
           <span>{t("search.button")}</span>

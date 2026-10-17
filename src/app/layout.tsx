@@ -1,11 +1,35 @@
 import type { Metadata } from "next";
-import { Vazirmatn } from "next/font/google";
+import localFont from "next/font/local";
+import { Rubik } from "next/font/google";
 import { siteConfig } from "@/shared/config/site";
 import "@/styles/globals.css";
 
-const vazirmatn = Vazirmatn({
-  subsets: ["arabic", "latin"],
-  variable: "--font-vazirmatn",
+const IRANSans = localFont({
+  src: [
+    {
+      path: "../fonts/iransans/IRANSansWeb.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../fonts/iransans/IRANSansWeb_Medium.woff2",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../fonts/iransans/IRANSansWeb_Bold.woff2",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--font-iransans",
+  display: "swap",
+});
+
+const rubik = Rubik({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-rubik",
   display: "swap",
 });
 
@@ -29,9 +53,9 @@ const RootLayout = ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => (
-  <html lang="fa" dir="rtl">
+  <html lang="fa" dir="rtl" className={`${IRANSans.variable} ${rubik.variable}`}>
     <body
-      className={`${vazirmatn.variable} flex min-h-screen flex-col bg-surface font-sans antialiased`}
+      className={`${IRANSans.className} flex min-h-screen flex-col bg-surface font-sans antialiased`}
     >
       <main className="flex flex-1 flex-col">{children}</main>
     </body>

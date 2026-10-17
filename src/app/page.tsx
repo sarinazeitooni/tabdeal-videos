@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-
 import { siteConfig } from "@/shared/config/site";
 import { t } from "@/shared/i18n";
 import { GradientHeader } from "@/shared/layout/GradientHeader";
@@ -19,15 +18,15 @@ const HomePage = () => (
     </GradientHeader>
 
     <Container className="flex flex-1 flex-col items-center justify-center px-1 py-16 text-center sm:py-24">
-      <h1 className="max-w-xl text-page-title font-bold text-text-primary sm:text-[2rem] sm:leading-10">
+      <h1 className="max-w-xl text-heading-lg font-bold text-text-primary md:text-display">
         {t("home.title")}
       </h1>
-      <p className="mt-4 max-w-lg text-body text-text-secondary sm:text-section-title">
+      <p className="mt-4 max-w-lg text-body font-normal text-text-secondary">
         {t("home.subtitle")}
       </p>
       <Link
         href="/videos"
-        className="mt-8 inline-flex h-12 items-center justify-center rounded-lg bg-accent px-8 text-body font-semibold text-ink transition-colors hover:bg-accent-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+        className="mt-8 inline-flex items-center justify-center rounded-lg bg-accent px-8 py-3 text-body-tight font-medium text-ink transition-colors hover:bg-accent-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
       >
         {t("home.cta")}
       </Link>

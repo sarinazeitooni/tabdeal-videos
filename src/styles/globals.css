@@ -15,6 +15,9 @@
     background-color: theme("colors.surface.DEFAULT");
     color: theme("colors.text.primary");
     font-family: theme("fontFamily.sans");
+    font-size: theme("fontSize.body[0]");
+    line-height: theme("fontSize.body[1].lineHeight");
+    letter-spacing: 0;
   }
 
   ::selection {
